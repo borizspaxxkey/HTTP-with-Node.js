@@ -41,21 +41,31 @@ server.on('request', (req, res) => {
       encoding: 'utf-8',
       maxFields: 20
     });
-    form.parse(req, (err, fields, files) => {
-      // fields contain the key value pair on on form
-      // Files parameter will contain the files on the form
-      // console.log('\n fields:');
-      // console.log(fields);
-      // console.log('\n files:');
-      // console.log(files);
-      if (err) {
+    form.parse(req)
+      .on('fileBegin', (name, file) => {
+        console.log('Our upload has started!');
+      })
+      .on('file', (name, file) => {
+        console.log('Field + file pair has been received');
+      })
+      .on('field', (name, value) => {
+        console.log('Field received:');
+        console.log(name, value);
+      })
+      .on('progress', (bytesReceived, bytesExpected) => {
+        console.log(bytesReceived + ' / ' + bytesExpected); // to send progress of upload to the user
+      })
+      .on('error', (err) => {
         console.log(err);
-        res.statusCode = 500;
-        res.end('Error!');
-      }
-      res.statusCode = 200;
-      res.end('success');
-    });
+        req.resume();  // to continue the lifecycle of it
+      })
+      .on('aborted', () => { // emmited when the request is aborted by the user
+        console.error('request aborted by the user!');
+      })
+      .on('end', () => {
+        console.log('Done - request fully received');
+        res.end('Success');
+      });
   }
   else {
     fs.createReadStream('./index.html').pipe(res);

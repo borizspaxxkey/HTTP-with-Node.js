@@ -29,3 +29,9 @@
 3.  Low memory footPrint
 4.  Graceful error handling
 5.  Very High Test Coverage
+
+// File Uploads
+Can handle file uploads with
+
+1.  Callbacks
+2.  Events
