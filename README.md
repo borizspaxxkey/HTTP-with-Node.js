@@ -1,4 +1,4 @@
-// 443 for https connections
+// 443 for https connections[standard https port]
 
 // Creating a Response
 
@@ -35,3 +35,14 @@ Can handle file uploads with
 
 1.  Callbacks
 2.  Events
+
+// BASIC AUTHORIZATION
+Authorization : Basic username:password
+
+// Axios
+
+1.  Well Maintained
+2.  Works client and Server Side
+3.  Streaming
+4.  Promised based Api
+5.  Automatic Transformation of data to JSON

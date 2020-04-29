@@ -1,4 +1,4 @@
-const https = require('https');
+const http = require('http');
 const url = require('url');
 const services = require('./services')
 const textBody = require('body');        // TextBody
@@ -8,7 +8,7 @@ const anyBody = require('body/any');  //  not sure the format of our incoming da
 const fs = require('fs');            // Reading File Stream
 const formidable = require('formidable');  // For file Uploading
 
-const server = https.createServer({
+const server = http.createServer({
   key: fs.readFileSync('./ssl/server.key'),
   cert: fs.readFileSync('./ssl/server.crt')
 });
@@ -28,6 +28,7 @@ server.on('request', (req, res) => {
       if (err) {
         console.log(err);
       } else {
+        console.log(body)
         services.createUser(body.userName);
         res.end('This was served with https!');
       }
@@ -81,4 +82,4 @@ server.on('request', (req, res) => {
 
 });
 
-server.listen(443); 
+server.listen(8080); 

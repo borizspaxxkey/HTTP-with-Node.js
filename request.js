@@ -1,7 +1,23 @@
-const http = require('http');
+const https = require('https');
 
-const request = http.request(
-  { hostname: 'www.google.com' },
+const data = JSON.stringify({
+  userName: 'fred'
+});
+
+const options = {
+  hostname: 'localhost',
+  port: 443,
+  path: '/users',
+  method: 'POST', // PUT, DELETE
+  headers: {
+    'Content-Type': 'application/json',
+    'Content-Length': data.length,
+    'Authorization': Buffer.from('myUsername' + ':' + 'myPassword').toString('base64')
+  }
+};
+
+const request = https.request(
+  options,
   (response) => {
     console.log(`statusCode: ${response.statusCode}`);
     console.log(response.headers);
@@ -17,5 +33,7 @@ const request = http.request(
 request.on('error', (err) => {
   console.log(err);
 });
+
+request.write(data);
 
 request.end();
