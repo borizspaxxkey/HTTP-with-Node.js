@@ -1,6 +1,10 @@
 const http = require('http');
 const url = require('url');
 const services = require('./services')
+const textBody = require('body');
+const jsonBody = require('body/json');
+const formBody = require('body/form');
+const anyBody = require('body/any');
 
 const server = http.createServer();
 server.on('request', (req, res) => {
